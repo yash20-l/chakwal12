@@ -1,0 +1,123 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
+}
+body{
+    min-height: 100vh;
+}
+.navigation-yash{
+    position: fixed;
+    width: 60px;
+    height: 100%;
+    background: #3e0748;
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+.navigation-yash:hover,
+.navigation-yash.active{
+    width: 250px;
+}
+
+.navigation-yash ul{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+.navigation-yash ul li{
+    position: relative;
+    width: 100%;
+    list-style: none;
+}
+
+.navigation-yash ul li a{
+    position: relative;
+    display: block;
+    width: 100%;
+    display: flex;
+    text-decoration: none;
+    color: #fff;
+}
+
+.navigation-yash ul li a .icon-yash{
+    position: relative;
+    display: block;
+    min-width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+}
+
+.navigation-yash ul li a .icon-yash .fa{
+    font-size: 24px;
+}
+
+.navigation-yash ul li a .title-yash{
+    position: relative;
+    display: block;
+    padding: 0 10px;
+    height: 60px;
+    line-height: 60px;
+    text-align: start;
+    white-space: nowrap;
+}
+.navigation-yash ul li:hover{
+    background: #ea1d63;
+}
+
+.toggle{
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background: #330748;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.toggle.active{
+    background-color: #ea1d63;
+}
+
+.toggle::before{
+    content: '\f0c9';
+    font-family: 'fontAwesome';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    line-height: 60px;
+    text-align: center;
+    font-size: 24px;
+    color: #fff;
+}
+
+.toggle.active:before{
+    content: '\f00d';
+}
+
+.navigation-yash ul li .heading-yash{
+    color: white;
+    padding: 20px 20px;
+    white-space: nowrap;
+}
+
+.navigation-yash ul li .heading-yash:hover{
+    background-color: #3e0748;
+}
+
+@media (max-width: 767px) {
+    .navigation-yash{
+        left: -60px;
+    }
+    .navigation-yash.active{
+        left: 0px;
+    }
+    .toggle{
+        display: block;
+    }
+}

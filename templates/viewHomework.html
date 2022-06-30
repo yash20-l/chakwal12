@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>{% load static %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.min.js"
+        integrity="sha512-NWNl2ZLgVBoi6lTcMsHgCQyrZVFnSmcaa3zRv0L3aoGXshwoxkGs3esa9zwQHsChGRL4aLDnJjJJeP6MjPX46Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css"
+        integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{homework.title}}</title>
+</head>
+<body>
+    <!-- navbar code goes here -->
+
+
+    <div class="navigation-yash">
+        <ul style="padding-left: 0;">
+            <li>
+                <a href="/home">
+                    <span class="icon-yash"><i class="fa fa-home" aria-hidden="true"></i></span>
+                    <span class="title-yash">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon-yash"><i class="fa fa-book" aria-hidden="true"></i></span>
+                    <span class="title-yash">Upload Homework</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon-yash"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
+                    <span class="title-yash">Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon-yash"><i class="fa fa-bell" aria-hidden="true"></i></span>
+                    <span class="title-yash">Messages</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon-yash"><i class="fa fa-comments" aria-hidden="true"></i></span>
+                    <span class="title-yash">Chat</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon-yash"><i class="fa fa-wrench" aria-hidden="true"></i></span>
+                    <span class="title-yash">Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="/logout">
+                    <span class="icon-yash"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                    <span class="title-yash">Log out</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon-yash"><i class="fa fa-flag" aria-hidden="true"></i></span>
+                    <span class="title-yash">Report a Bug</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="toggle" onclick="toggleMenu()"></div>
+
+    <script>
+        function toggleMenu() {
+            let navigation = document.querySelector('.navigation-yash');
+            let toggle = document.querySelector('.toggle');
+            navigation.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+    </script>
+
+    <div class="heading-title" style="width: 100%; height: 100%; background-color: rgb(31, 44, 9); padding: 10px 10px;">
+        <h1 class="text-center py-2" style="font-family: 'Akula', sans-serif; color: white; letter-spacing: 2px;">{{homework.title}}</h1>
+</div>
+    <div class="container">
+    <div class="homework-details" style="margin-top: 30px;">
+        <h4 style="font-family: poppins, sans-serif; font-weight: 600;">Uploaded By : {{homework.user}}</h4>
+        <h4 style="font-family: poppins, sans-serif; font-weight: 600;">Uploaded On : {{homework.date}}</h4>
+        <h4 style="font-family: poppins, sans-serif; font-weight: 600;">Likes : {{likes}}</h4>
+        <h4 style="font-family: poppins, sans-serif; font-weight: 600;">Subject : {{homework.subject}}</h4>
+        <h4 style="font-family: poppins, sans-serif; font-weight: 600;">Views : {{homework.views}}</h4>
+    </div>
+    <hr style="width: 100%; height: 5px; color: crimson; border-radius: 10px; opacity: 1;">
+
+    <div class="options">
+        <div class="row">
+            <div class="col-4">
+            {% if getuser.preference == 1 %}
+            <a href="#" style="text-decoration: none;"><div class="like-option-icon" style="display: flex; flex-direction: column; align-items: center;" onclick="likePost()">
+                    <span><i class="fa fa-heart" aria-hidden="true" style="font-size: 40px; color: crimson; text-align: right;"></i></span>
+                    <h4 class="text-center" style="margin-top: 10px; color: black;">Like</h4>
+                </div></a>
+                {% else %}
+                <a href="#" style="text-decoration: none;"><div class="like-option-icon" style="display: flex; flex-direction: column; align-items: center;" onclick="likePost()">
+                    <span><i class="fa fa-heart" aria-hidden="true" style="font-size: 40px; color: black; text-align: right;"></i></span>
+                    <h4 class="text-center" style="margin-top: 10px; color: black;">Like</h4>
+                </div></a>
+            {% endif %}
+            </div>
+            <div class="col-4">
+                <a href="/media/{{homework.files}}" style="text-decoration: none;" download><div class="like-option-icon" style="display: flex; flex-direction: column; align-items: center;">
+                    <span><i class="fa fa-download" aria-hidden="true" style="font-size: 40px; color: rgb(80, 160, 15); text-align: right;"></i></span>
+                    <h4 class="text-center" style="margin-top: 10px; color: black;">Download</h4>
+                </div></a>
+            </div>
+            <div class="col-4">
+                <a href="#" style="text-decoration: none;"><div class="like-option-icon" style="display: flex; flex-direction: column; align-items: center;">
+                    <span><i class="fa fa-flag" aria-hidden="true" style="font-size: 40px; color: gray; text-align: right;"></i></span>
+                    <h4 class="text-center" style="margin-top: 10px; color: black;">Report</h4>
+                </div></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @font-face {
+        font-family: "Akula";
+        src: url({% static 'Akula.ttf' %});
+    }
+</style>
+
+<form action="/like" method="POST" id="likeform">{% csrf_token %}
+    <input type="hidden" value="{{homework.title}}" name="homework">
+    <input type="hidden" name="preference" value="1">
+</form>
+
+<script>
+    let likeForm = document.getElementById('likeform')
+    function likePost(){
+        likeForm.submit();
+        console.log('form submitted');
+    }
+</script>
+
+</body>
+</html>

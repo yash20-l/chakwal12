@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>{% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.min.js"
+        integrity="sha512-NWNl2ZLgVBoi6lTcMsHgCQyrZVFnSmcaa3zRv0L3aoGXshwoxkGs3esa9zwQHsChGRL4aLDnJjJJeP6MjPX46Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css"
+        integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center" style="font-family: 'poppins', sans-serif; margin-top: 25px;">Profile</h1>
+        {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <p{% if message.tags%} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+</ul>
+        <form action="/changeprofile" method="POST">{% csrf_token %}
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" name="username" value="{{user}}" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control" name="email" value="{{user.email}}" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="firstname" class="form-label">First Name</label>
+                <input type="text" class="form-control" name="firstname" value="{{user.first_name}}" onchange="disableEnableButton()">
+            </div>
+            <div class="mb-3">
+                <label for="lastname" class="form-label">Last Name</label>
+                <input type="text" class="form-control" name="lastname" value="{{user.last_name}}" onchange="disableEnableButton()">
+            </div>
+            {% if user.is_superuser %}
+            <p style="font-family: 'poppins', sans-serif; font-size: 16px; color: crimson;  margin-top: 8vh;">You are now a SuperUser which mean that you can upload any content to the app. Be responsible, uploading any content rather than education could lead to permanent ban of your account.</p>
+            {% else %}
+            <button class="btn" style="border: 2px solid black; font-family: 'poppins', sans-serif; font-size: 16px;">REQUEST SUPERUSER</button>
+            {% endif %}
+            <div class="buttons">
+                <button class="btn btn-secondary"  value="Go Elsewhere" formaction="/home">Back</button>
+                <button class="btn btn-success" type="submit" disabled id="submit">Change</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+<script>
+    var fname = document.getElementById('fname');
+    var lname = document.getElementById('lname');
+    var button = document.getElementById('submit');
+    function disableEnableButton(){
+        button.disabled = false;
+
+        }
+    
+</script>
+</html>
+<style>
+    .success{
+        color: green;
+    }
+    .error{
+        color: crimson;
+    }
+</style>

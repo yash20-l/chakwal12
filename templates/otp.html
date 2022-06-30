@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Verify Your Account{% endblock title %}
+{% block body %}
+<div class="container">
+    <div class="heading text-center my-4" style="margin-top: 20vh; color: navy;"><h1>Verify {{email}}</h1></div>
+    <div class="otp-container" style="margin-top: 30vh; padding-top: 20px; padding-bottom: 20px; width: auto; background-color: white; border-radius: 10px;">
+        <div class="heading-otp">
+            <h2 style="text-align: center;">Enter OTP Here</h2>
+        </div>
+        <div class="otp-enter" style="display: flex; align-items: center; justify-content: center; margin-top: 20px;">
+            <form action="#" method="POST" style="align-items: center; justify-content: center; display: flex; flex-direction: column;">{% csrf_token %}
+                <input type="text" name="otp" style="border: none; outline: none; border-bottom: 3px solid black; font-size: 30px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; text-align: center; width: 50%; font-weight: 600; letter-spacing: 3px;" maxlength="5" name='otp'>
+                <button type="submit" style="margin-top: 20px; border: none; outline: none; border: 3px solid black; color: black; background-color: white; width: 20vh;  letter-spacing: 1px; font-weight: 700; font-size: 20px; border-radius: 10px;">VERIFY</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+{% block body-style %}{% load static %}
+style="background: url({% static 'otp-bg.png' %}); background-size: 220vh;"
+{% endblock body-style %}

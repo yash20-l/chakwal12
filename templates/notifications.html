@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>{% load static %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.min.js"
+        integrity="sha512-NWNl2ZLgVBoi6lTcMsHgCQyrZVFnSmcaa3zRv0L3aoGXshwoxkGs3esa9zwQHsChGRL4aLDnJjJJeP6MjPX46Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css"
+        integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+</head>
+
+<body style="background-color: rgb(248, 248, 248);">
+    <div class="navigation-yash" style="z-index: 1000;">
+        <ul style="padding-left: 0;">
+            <li>
+                <a href="/home">
+                    <span class="icon-yash"><i class="fa fa-home" aria-hidden="true"></i></span>
+                    <span class="title-yash">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="/profile">
+                    <span class="icon-yash"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
+                    <span class="title-yash">Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="/logout">
+                    <span class="icon-yash"><i class="fa fa-paperclip" aria-hidden="true"></i></span>
+                    <span class="title-yash">Terms</span>
+                </a>
+            </li>
+            <li>
+                <a href="/logout">
+                    <span class="icon-yash"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                    <span class="title-yash">Log out</span>
+                </a>
+            </li>
+            <hr style="opacity: 1; color: white;">
+            <li>
+                <span class="title-yash" style="color: white;">Version 1 (Beta)</span>
+            </li>
+        </ul>
+    </div>
+    <div class="toggle" onclick="toggleMenu()"></div>
+
+    <script>
+        function toggleMenu() {
+            let navigation = document.querySelector('.navigation-yash');
+            let toggle = document.querySelector('.toggle');
+            navigation.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+    </script>
+
+
+    <section class="hello-section" style="background: linear-gradient(#00BFFF, #C71585); min-height: 20vh; display: flex; align-items: center; justify-content: center; ">
+        <div class="hello-heading" style="color: white; height: 100%;">
+            <h1 style=" font-size: 40px; font-weight: 600;">Notifications</h1>
+        </div>
+    </section>
+{% if noti.count == 0 %}
+<div class="no-ques" style="height: 50vh; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+<h1 class="text-center" style="color: gray;">No Notifications Yet</h1>
+<img src="{% static 'emoji.png' %}" alt="" style="margin-top: 20px;">
+</div>
+{% else %}
+    <section class="main-section" style="margin-top: 10vh; ">
+        <div class="container" style="padding-left: 30px; padding-right: 30px;">
+        {% for i in noti %}
+            <div class="main-wrapper"
+                style="display: flex; flex-direction: column; align-items: center; background-color: white; box-shadow: -10px 0px 0px 0px rgba(4, 226, 255, 0.8), 0 -10px 20px -5px #131313;; border-radius: 25px; margin-bottom: 80px;">
+                <div class="image">
+                    <img src="/media/{{i.image}}" alt="" style="height: 40vh; position: relative; top: -36px; border-radius: 20px; width: 33vh;">
+                </div>
+                <div class="card" style="background-color: white; padding-left: 20px; padding-right: 20px; border: none; align-items: center; outline: none; border-radius: 30px;">
+                    <div class="details">
+                        <p style="text-align: center;">{{i.date}}</p>
+                        <h4 style="text-align: center; font-family: 'Poppins', sans-serif; padding-bottom: 10px;">{{i.title}}</h4>
+                        <p style="font-family: sans-serif;">{{i.content}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endif %}
+
+</body>
+
+</html>

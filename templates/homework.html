@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>{% load static %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.min.js"
+        integrity="sha512-NWNl2ZLgVBoi6lTcMsHgCQyrZVFnSmcaa3zRv0L3aoGXshwoxkGs3esa9zwQHsChGRL4aLDnJjJJeP6MjPX46Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css"
+        integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework | Chakwal 12A</title>
+</head>
+
+<body>
+
+    <!-- navbar code goes here -->
+
+
+    <div class="navigation-yash" style="z-index: 1000;">
+        <ul style="padding-left: 0;">
+            <li>
+                <a href="/home">
+                    <span class="icon-yash"><i class="fa fa-home" aria-hidden="true"></i></span>
+                    <span class="title-yash">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="/profile">
+                    <span class="icon-yash"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
+                    <span class="title-yash">Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="/logout">
+                    <span class="icon-yash"><i class="fa fa-paperclip" aria-hidden="true"></i></span>
+                    <span class="title-yash">Terms</span>
+                </a>
+            </li>
+            <li>
+                <a href="/logout">
+                    <span class="icon-yash"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                    <span class="title-yash">Log out</span>
+                </a>
+            </li>
+            <hr style="opacity: 1; color: white;">
+            <li>
+                <span class="title-yash" style="color: white;">Version 1 (Beta)</span>
+            </li>
+        </ul>
+    </div>
+    <div class="toggle" onclick="toggleMenu()"></div>
+
+
+
+    <section class="hello-section" style="background: linear-gradient(#00BFFF, #C71585); min-height: 20vh; display: flex; align-items: center; justify-content: center; ">
+        <div class="hello-heading" style="color: white; height: 100%;">
+            <h1 style=" font-size: 40px; font-weight: 600;">Homework</h1>
+        </div>
+    </section>
+    {% if messages %}
+    <ul class="messages" style="display: flex; align-items: center; justify-content: center;">
+        {% for message in messages %}
+        <li{% if message.tags == 'success' %} class="{{ message.tags }}" style="list-style: none;">
+            <h3 class="text-center" style="color: green; margin-top: 30px;">{{message}}</h3>{% else %}class="{{
+            message.tags }}" style="list-style: none;"><h3 class="text-center"
+                style="color: rgb(201, 16, 16); margin-top: 30px;">{{message}}</h3>{% endif %}</li>
+            {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if homework.count == 0 %}
+<div class="no-ques" style="height: 50vh; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+<h1 class="text-center" style="color: gray;">No Homework Yet</h1>
+<img src="{% static 'emoji.png' %}" alt="" style="margin-top: 20px;">
+</div>
+{% else %}
+
+    <section class="main-section" style="margin-top: 10vh; ">
+        <div class="container" style="padding-left: 30px; padding-right: 30px;">
+            {% for i in homework %}
+            <div class="main-wrapper" id="wrapper-card"
+                style="display: flex; flex-direction: column; align-items: center; background-color: white; border-radius: 25px; margin-bottom: 80px; box-shadow: -10px 0px 0px 0px #6f00ff, 0 -10px 20px -5px #131313;">
+                <div class="card" id="maincard-{{i.slug}}"
+                    style="background-color: white; padding-left: 20px; padding-right: 20px; border: none; align-items: center; outline: none; border-radius: 30px; padding-top: 20px;">
+                    <p class="text-center">{{i.subject}}</p>
+                    <div class="details">
+                        <h4 style="text-align: center; font-family: 'Poppins', sans-serif; padding-bottom: 10px;">
+                            {{i.title}}</h4>
+
+                        <div id='info-{{i.slug}}' style="display: flex; align-items: center; justify-content: center;">
+                            <p style="text-align: center; margin-right: 10px;"><img src="{% static 'date.png' %}" alt=""
+                                    style="width: 25px; margin-right: 5px;">{{i.date}}</p>
+                            <p style="text-align: center; margin-right: 10px;" id="download_{{i.slug}}"><img
+                                    src="https://img.icons8.com/material-outlined/24/000000/visible--v2.png" style="margin-right:
+                                5px;">0</p>
+                            <p style="text-align: center;"><img src='https://img.icons8.com/fluency/48/000000/like.png'
+                                    alt="" style="width: 25px; margin-right: 5px;">{{i.likes}}</p>
+                        </div>
+
+                        <p style="font-family: sans-serif;">{{i.desc}}</p>
+                    </div>
+                    <div class="buttons" style="padding-bottom: 4vh;">
+                        <button class="btn btn-success like" id="like-{{i.slug}}"
+                            onclick="likePost('likeform-{{i.slug}}')"
+                            style="background: white; border-radius: 20px; border: 2px solid #E74C3C; color: #E74C3C; font-weight: 500; font-family: 'poppins', sans-serif; font-size: 15px; box-shadow: none;">
+                        </button>
+                        <a href="/media/{{i.files}}" style="text-decoration: none;" download><button class="btn btn-success download"
+                                onclick="progress('progress_download-{{i.slug}}', 'download_icon-{{i.slug}}')"
+                                style="background: white; border-radius: 20px; border: 2px solid rgb(255, 11, 105); color: rgb(255, 11, 105); font-weight: 500; font-family: 'poppins', sans-serif; font-size: 15px; box-shadow: none; margin-right: 10px; margin-left: 10px;"><img
+                                    src="{% static 'download_icon.gif' %}"
+                                    style="width: 20px; padding-right: 4px; display: none; color: rgb(255, 11, 105);"
+                                    id="progress_download-{{i.slug}}"> <img src="{% static 'initial_downloaded.png' %}"
+                                    alt="" style="width: 20px; padding-right: 4px; color: rgb(255, 11, 105);"
+                                    id="download_icon-{{i.slug}}">
+                                Download</button></a>
+                        <button class="btn btn-success explore" onclick="sendReport('report-{{i.slug}}')"
+                            style="background: white; border-radius: 20px; border: 2px solid #778586; color: #778586; font-weight: 500; font-family: 'poppins', sans-serif; font-size: 15px; box-shadow: none;"><img
+                                src="{% static 'error.png' %}" alt="" style="width: 22px; color: #95A5A6;">
+                            <span class="report-text">Report</span></button>
+                    </div>
+                </div>
+            </div>
+            <form action="/like" method="POST" id="likeform-{{i.slug}}">{% csrf_token %}
+                <input type="hidden" value="{{i.title}}" name="homework">
+                <input type="hidden" name="preference" value="1">
+            </form>
+            <form action="/report" method="post" id="report-{{i.slug}}">{% csrf_token %}
+                <input type="hidden" value="{{i.title}}" name="post">
+            </form>
+            {% endfor %}
+        </div>
+    </section>
+{% endif %}
+
+    <script>
+
+        function progress(id1, id2) {
+            var x = document.getElementById(id1).style.display = 'inline';
+            var y = document.getElementById(id2).style.display = 'none';
+            var value = document.getElementById(id);
+            value.innerHTML = value.innerHTML + 1;
+        }
+
+        function sendReport(id){
+            form = document.getElementById(id)
+            form.submit()
+            console.log('Post Reported Successfully !!!')
+        }
+
+
+        $.ajax({
+            url: '/fetchlikes',
+            type: 'post',
+            data: { 'user': '{{request.user}}', 'post': '{% for i in  homework %}{{i.id}},{% endfor %}' },
+            dataType: 'json',
+            success: function (data, status) {
+                var likes = data['likesValues']
+                console.log(likes)
+                allposts = document.querySelectorAll('.like')
+                console.log(allposts.length)
+                for (let i = 0; i < allposts.length; i++) {
+                    if (likes[i] == 0) {
+                        document.getElementById(allposts[i].id).innerHTML = "<img src=\"{% static 'heart.png' %}\" width=\"25px\"><span class='button-text'> Like</span>";
+                    }
+                    else {
+                        var getpost = document.getElementById(allposts[i].id).innerHTML = "<img src=\"{% static 'heart2.png' %}\" width=\"25px\"><span class='button-text'> Liked</span>";
+                        var getpost = document.getElementById(allposts[i].id).style.color = 'red';
+                        var getpost = document.getElementById(allposts[i].id).style.borderColor = 'red';
+                    }
+                }
+
+            },
+
+
+            error: function (res) {
+                console.log(res.status)
+            }
+        })
+
+
+        function toggleMenu() {
+            let navigation = document.querySelector('.navigation-yash');
+            let toggle = document.querySelector('.toggle');
+            navigation.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+
+
+
+        function likePost(id) {
+            let likeForm = document.getElementById(id)
+            likeForm.submit();
+            console.log('form submitted');
+        }
+
+
+    </script>
+
+    <style>
+        .active2 {
+            height: 70vh;
+        }
+
+        .hideExplore {
+            display: inline;
+        }
+
+        .showExplore {
+            display: none;
+        }
+
+
+
+        @media(max-width: 450px) {
+            .button-text{
+                display: none;
+            }
+            .report-text{
+                display: none;
+            }
+        }
+    </style>
+
+</body>
+
+</html>

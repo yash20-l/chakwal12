@@ -1,0 +1,294 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>{% load static %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.min.js"
+    integrity="sha512-NWNl2ZLgVBoi6lTcMsHgCQyrZVFnSmcaa3zRv0L3aoGXshwoxkGs3esa9zwQHsChGRL4aLDnJjJJeP6MjPX46Q=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css"
+    integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat</title>
+</head>
+
+<body style="position: relative;">
+
+  <div class="chat-heading" style="background-color: rgb(223, 14, 101); padding: 10px 10px; position: fixed; z-index: 1; width: 100%; margin: 0; top: 0;">
+    <h1 class="text-center py-2" style="color: white; font-family: Arial, Helvetica, sans-serif; font-weight: 600;">Chat
+      with friends</h1>
+  </div>
+  <div class="container" style="">
+    <div class="caution" style="margin-top: 15vh; background-color: rgb(241, 16, 103); padding: 20px; border-radius: 20px; color: white;">
+      <p style="font-family: sans-serif">Welcome to StuBuddy realtime chat. Keep the chat clean <b>DO NOT ABUSE</b> or you will be banned from using chat for 2 days. Do not share any passwords, mobile numbers or any private things in chat. Be responsible, Happy chatting !</p>
+    </div>
+    <div class="message-section" style="display: flex; flex-direction: column;">
+      <div class="chat-bot"></div>
+    </div>
+  </div>
+  <div class="container-fluid" style="padding: 0; margin-top: 10vh;">
+    <div class="type-section" style="position: fixed; bottom: 0; width: 100%;">
+      <div class="main-type-section"
+        style="display: flex; background-color: rgb(206, 206, 206); padding: 10px; align-items: center; justify-content: center;">
+          <input type="text" placeholder="Type your message here" name="message"
+            style="border-radius: 20px; color: black; width: 60vh; height: 7vh;  padding: 10px; border: none; font-size: 18px; outline: none;"
+            id="messageinp">
+        <span><a href="#" style="text-decoration: none;" id="sendurl"><i class="fa fa-paper-plane" aria-hidden="true"
+              style="font-size: 30px; color: rgb(243, 12, 108); margin-left: 20px;"
+              onclick="sendData()"></i></a></span>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .left {
+      clear: both;
+    }
+
+    .right {
+      clear: both;
+    }
+
+    #messageinp:hover {
+      border: none;
+      border-radius: 20px;
+    }
+
+    .message-box {
+      padding: 3px 3px;
+      background-color: rgb(228, 228, 228);
+      max-width: 40vh;
+      border-radius: 10px;
+      padding: 6px;
+      margin-bottom: 8px;
+    }
+    .message {
+      font-size: 18px;
+      margin-left: 4px;
+    }
+
+    .night-bot{
+      font-size: 17px;
+      color: white;
+      background-color: rgb(223, 14, 101);
+      text-align: center;
+      border-radius: 15px;
+      width: 80%;
+      padding: 5px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      align-self: center;
+    }
+
+    .message-box-container{
+      overflow: hidden;
+      align-self: flex-end;
+      background: rgb(64, 224, 208);
+      font-size: 17px;
+      letter-spacing: 0.5px;
+      font-family: sans-serif;
+    }
+
+    .details-right{
+      font-size: 12px;
+      margin-left: 5px;
+      text-align: right;
+      position: relative;
+      top: 0;
+      margin-bottom: 15px;
+    }
+
+    .details-left{
+      font-size: 12px;
+      margin-left: 5px;
+      text-align: left;
+      position: relative;
+      top: 0;
+      margin-bottom: 15px;
+    }
+
+    /* .chat-bot{
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+    } */
+
+    @media(max-width: 470px) {
+      #messageinp {
+        max-width: 40vh;
+      }
+    }
+  </style>
+
+  <script>
+    const socket = new WebSocket(
+        "ws://127.0.0.1:8000/ws/chat"
+    );
+
+    socket.onmessage = function(e){
+      const data = JSON.parse(e.data);
+      if (data['type'] == 'alert_message'){
+        var container = document.querySelector('.message-section')
+        var message_section = document.querySelector('.chat-bot');
+        var nightBot = document.createElement('div');
+        nightBot.classList.add('night-bot');
+        nightBot.textContent = data['alert'];
+        container.append(nightBot);
+
+      }else{
+        var container = document.querySelector('.message-section')
+        var textBbox = document.createElement('div');
+        textBbox.classList.add('message-box');
+        var message = document.createElement('span');
+        var details = document.createElement('span')
+        var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes();
+        details.textContent = data.author + " | " +  time;
+        textBbox.style.overflow = 'hidden';
+        message.textContent = data.message;
+        if(data['author'] == '{{user}}'){
+          details.classList.add('details-right');
+          textBbox.style.alignSelf = "flex-end"
+          textBbox.style.background = "#40e0d0";
+          textBbox.style.fontSize = '17px';
+          textBbox.style.letterSpacing = '.5px';
+          textBbox.style.fontFamily = 'sans-serif';
+          // textBbox.style.color = 'white';
+
+        }else{
+          details.classList.add('details-left');
+          textBbox.style.alignSelf = "flex-start"
+        }
+        
+        container.append(textBbox);
+        textBbox.append(message);
+        container.append(details);
+    }
+
+      }
+
+    function sendData(message){
+      message = document.querySelector('#messageinp').value;
+      processmessage = JSON.stringify({'message' : message});
+      socket.send(processmessage);
+      document.querySelector('#messageinp').value = "";
+
+    }
+
+    // socket.onopen = (e)=>{
+    //   var message_section = document.querySelector('.chat-bot');
+    //   var nightBot = document.createElement('div');
+    //   nightBot.classList.add('night-bot');
+    //   nightBot.textContent = "{{user}} joined the chat";
+    //   message_section.append(nightBot);
+    // }
+
+//     function findLongestWord(str) {
+//       var strSplit = str.split(' ');
+//       var longestWord = 30;
+//       for(var i = 0; i < strSplit.length; i++){
+//         if(strSplit[i].length > longestWord){
+//       longestWord = strSplit[i].length;
+//         }
+//       }
+//       console.log(longestWord)
+//       return longestWord;
+// }
+
+
+$("#sendurl").click(function(e) {
+e.preventDefault()
+$('.message-box').focus();
+  });
+
+
+  </script>
+
+</body>
+
+</html>
+
+
+{% comment %} ############ ***** NEW CHAT CODE GOES HERE ***** ############{% endcomment %}
+
+
+ -->
+
+
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.min.js" integrity="sha512-NWNl2ZLgVBoi6lTcMsHgCQyrZVFnSmcaa3zRv0L3aoGXshwoxkGs3esa9zwQHsChGRL4aLDnJjJJeP6MjPX46Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <meta charset="UTF-8">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>chat | Coming Soon</title>
+ </head>
+ <body>
+  <div class="navigation-yash" style="z-index: 1000;">
+    <ul style="padding-left: 0;">
+        <li>
+            <a href="/home">
+                <span class="icon-yash"><i class="fa fa-home" aria-hidden="true"></i></span>
+                <span class="title-yash">Home</span>
+            </a>
+        </li>
+        <li>
+            <a href="/profile">
+                <span class="icon-yash"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
+                <span class="title-yash">Profile</span>
+            </a>
+        </li>
+        <li>
+            <a href="/logout">
+                <span class="icon-yash"><i class="fa fa-paperclip" aria-hidden="true"></i></span>
+                <span class="title-yash">Terms</span>
+            </a>
+        </li>
+        <li>
+            <a href="/logout">
+                <span class="icon-yash"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                <span class="title-yash">Log out</span>
+            </a>
+        </li>
+        <hr style="opacity: 1; color: white;">
+        <li>
+            <span class="title-yash" style="color: white;">Version 1 (Beta)</span>
+        </li>
+    </ul>
+</div>
+<div class="toggle" onclick="toggleMenu()"></div>
+
+
+<script>
+    function toggleMenu() {
+        let navigation = document.querySelector('.navigation-yash');
+        let toggle = document.querySelector('.toggle');
+        navigation.classList.toggle('active');
+        toggle.classList.toggle('active');
+    }
+</script>
+   <div class="container" style="height: 100vh;">
+     <div class="text" style="text-align: center; height: 100%; align-items: center; justify-content: center; display: flex; flex-direction: column;">
+       <h1>Coming Soon !</h1>
+       <p>Stay Tuned</p>
+     </div>
+   </div>
+ </body>
+ </html>

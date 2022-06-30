@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>{% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.min.js"
+        integrity="sha512-NWNl2ZLgVBoi6lTcMsHgCQyrZVFnSmcaa3zRv0L3aoGXshwoxkGs3esa9zwQHsChGRL4aLDnJjJJeP6MjPX46Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css"
+        integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="navigation-yash" style="z-index: 1000;">
+        <ul style="padding-left: 0;">
+            <li>
+                <a href="/home">
+                    <span class="icon-yash"><i class="fa fa-home" aria-hidden="true"></i></span>
+                    <span class="title-yash">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="/profile">
+                    <span class="icon-yash"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
+                    <span class="title-yash">Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="/logout">
+                    <span class="icon-yash"><i class="fa fa-paperclip" aria-hidden="true"></i></span>
+                    <span class="title-yash">Terms</span>
+                </a>
+            </li>
+            <li>
+                <a href="/logout">
+                    <span class="icon-yash"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                    <span class="title-yash">Log out</span>
+                </a>
+            </li>
+            <hr style="opacity: 1; color: white;">
+            <li>
+                <span class="title-yash" style="color: white; white-space: nowrap;">Version 2</span>
+            </li>
+        </ul>
+    </div>
+    <div class="toggle" onclick="toggleMenu()"></div>
+
+    <script>
+        function toggleMenu() {
+            let navigation = document.querySelector('.navigation-yash');
+            let toggle = document.querySelector('.toggle');
+            navigation.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+    </script>
+
+
+    <div class="container" style="padding: 20px;">
+        <h3 class="text-left" style="font-size: 20px; color: gray;">Hello,</h3>
+        <h2 class="text-left" style="font-family: 'poppins', sans-serif; font-size: 30px;">{{user}}</h2>
+        <div class="search-box" style="
+        margin-top: 20px;
+background: #ececec;
+border-radius: 10px;
+display: flex;
+align-items: center;
+justify-content: flex-start;">
+            <form action="#" method="get" style="padding-top: 10px; width: 100%;">
+                <div class="mb-3" style="    display: flex;
+                align-items: center;padding-left: 20px;">
+                    <i class="fa fa-search" style="padding-right: 20px; color: orange;"></i><input type="text"
+                        name="search" placeholder="Search" style="width: 100%;
+                background: #ececec;
+                border: none; outline: none; width: 100%;">
+                </div>
+            </form>
+        </div>
+
+        <div class="goals" style="padding: 20px;  margin-top: 5vh; background-color: aquamarine; border-radius: 20px;">
+            <div class="row">
+                <div class="col-8">
+                    <div class="text-hello">
+                        <h3 style="color: rgb(247, 12, 110);">What do you want to learn today?</h3>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="options" style="margin-top: 30px;">
+            <ul class="list-group ">
+                <a href="/homework" style="text-decoration: none;">
+                    <li class="list-group-item border-0" style="color: orangered; display: flex;"><img
+                            src="{% static 'home2.png' %}" alt="" style="width: 25px; height: 25px; margin-right: 10px;">
+                        <div class="span" style="width: 100px;"><span>Homework</span></div><img src=" {% static 'arow2.png' %}" alt=""
+                            style="width: 25px; height: 25px; margin-left: 120px;">
+                    </li>
+                </a>
+                <a href="/notifications" style="text-decoration: none;">
+                    <li class="list-group-item border-0" style="color: orangered; display: flex;"><img src=" {% static 'bell.png' %}"
+                            alt="" style="width: 25px; height: 25px; margin-right: 10px;">
+                        <div class="span" style="width: 100px;"><span>Notifications</span></div><img src=" {% static 'arow2.png' %}"
+                            alt="" style="width: 25px; height: 25px; margin-left: 120px;">
+                    </li>
+                </a>
+                <a href="/questions" style="text-decoration: none;">
+                    <li class="list-group-item border-0" style="color: orangered; display: flex;"><img src=" {% static 'brain.png' %}"
+                            alt="" style="width: 25px; height: 25px; margin-right: 10px;">
+                        <div class="span" style="width: 100px;"><span>Questions</span></div><img src="{% static 'arow2.png' %}" alt=""
+                            style="width: 25px; height: 25px; margin-left: 120px;">
+                    </li>
+                </a>
+                <a href="/notes" style="text-decoration: none;">
+                    <li class="list-group-item border-0" style="color: orangered; display: flex;"><img src="{% static 'book.png' %}"
+                            alt="" style="width: 25px; height: 25px; margin-right: 10px;">
+                        <div class="span" style="width: 100px;"><span>Notes</span></div><img src="{% static 'arow2.png' %}" alt=""
+                            style="width: 25px; height: 25px; margin-left: 120px;">
+                    </li>
+                </a>
+                <a href="/chat" style="text-decoration: none;">
+                    <li class="list-group-item border-0" style="color: orangered; display: flex;"><img src="{% static 'chat.png' %}"
+                            alt="" style="width: 25px; height: 25px; margin-right: 10px;">
+                        <div class="span" style="width: 100px;"><span>Chat</span></div><img src="{% static 'arow2.png' %}" alt=""
+                            style="width: 25px; height: 25px; margin-left: 120px;">
+                    </li>
+                </a>
+                <a href="/motivation" style="text-decoration: none;">
+                    <li class="list-group-item border-0" style="color: orangered; display: flex;"><img
+                            src="{% static 'question.png' %}" alt="" style="width: 25px; height: 25px; margin-right: 10px;">
+                        <div class="span" style="width: 100px;"><span>Motivation</span></div><img src="{% static 'arow2.png' %}" alt=""
+                            style="width: 25px; height: 25px; margin-left: 120px;">
+                    </li>
+                </a>
+            </ul>
+
+        </div>
+
+    </div>
+
+</html>

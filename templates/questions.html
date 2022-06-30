@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>{% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.min.js"
+        integrity="sha512-NWNl2ZLgVBoi6lTcMsHgCQyrZVFnSmcaa3zRv0L3aoGXshwoxkGs3esa9zwQHsChGRL4aLDnJjJJeP6MjPX46Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css"
+        integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questions</title>
+</head>
+
+<body>
+    <!-- navbar code goes here -->
+
+
+    <div class="navigation-yash" style="z-index: 1000;">
+        <ul style="padding-left: 0;">
+            <li>
+                <a href="/home">
+                    <span class="icon-yash"><i class="fa fa-home" aria-hidden="true"></i></span>
+                    <span class="title-yash">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="/profile">
+                    <span class="icon-yash"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
+                    <span class="title-yash">Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="/logout">
+                    <span class="icon-yash"><i class="fa fa-paperclip" aria-hidden="true"></i></span>
+                    <span class="title-yash">Terms</span>
+                </a>
+            </li>
+            <li>
+                <a href="/logout">
+                    <span class="icon-yash"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                    <span class="title-yash">Log out</span>
+                </a>
+            </li>
+            <hr style="opacity: 1; color: white;">
+            <li">
+                <span class="title-yash" style="color: white;">Version 1 (Beta)</span>
+            </li>
+        </ul>
+    </div>
+    <div class="toggle" onclick="toggleMenu()"></div>
+
+
+    <script>
+        function toggleMenu() {
+            let navigation = document.querySelector('.navigation-yash');
+            let toggle = document.querySelector('.toggle');
+            navigation.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+    </script>
+
+    <section class="hello-section"
+        style="background: linear-gradient(#00BFFF, #C71585); min-height: 20vh; display: flex; align-items: center; justify-content: center; ">
+        <div class="hello-heading" style="color: white; height: 100%;">
+            <h1 style=" font-size: 40px; font-weight: 600;">Questions</h1>
+        </div>
+    </section>
+{% if ques.count == 0 %}
+<div class="no-ques" style="height: 50vh; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+<h1 class="text-center" style="color: gray;">No Questions Yet</h1>
+<img src="{% static 'emoji.png' %}" alt="" style="margin-top: 20px;">
+</div>
+{% else %}
+    <div class="container" style="padding-left: 30px; padding-right: 30px; margin-top: 8vh;">
+        {% for i in ques %}
+        <div class="main-wrapper" id="wrapper-card"
+            style="display: flex; flex-direction: column; align-items: center; background-color: white; border-radius: 25px; margin-bottom: 80px; box-shadow: -10px 0px 0px 0px #ff0077, 0 -10px 20px -5px #131313;">
+            <div class="card" id="maincard-{{i.slug}}"
+                style="background-color: white; padding-left: 20px; padding-right: 20px; border: none; align-items: center; outline: none; border-radius: 30px; padding-top: 20px;">
+                <p class="text-center">{{i.date}}</p>
+                <div class="details">
+                    <h4 style="text-align: left; font-family: 'Poppins', sans-serif; padding-bottom: 10px;">
+                        {{i.title}}</h4>
+                </div>
+                <div class="buttons" style="padding-bottom: 4vh;">
+                    <a href="/media/{{i.files}}" style="text-decoration: none;" download="{{i.title}}"><button class="btn btn-success download"
+                            onclick="progress('progress_download-{{i.slug}}', 'download_icon-{{i.slug}}')"
+                            style="background: white; border-radius: 20px; border: 2px solid rgb(255, 11, 105); color: rgb(255, 11, 105); font-weight: 500; font-family: 'poppins', sans-serif; font-size: 15px; box-shadow: none;"><img
+                                src="{% static 'download_icon.gif' %}"
+                                style="width: 20px; padding-right: 4px; display: none; color: rgb(255, 11, 105);"
+                                id="progress_download-{{i.slug}}"> <img src="{% static 'initial_downloaded.png' %}"
+                                alt="" style="width: 20px; padding-right: 4px; color: rgb(255, 11, 105);"
+                                id="download_icon-{{i.slug}}">
+                            Download</button></a>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+</body>
+
+</html>
